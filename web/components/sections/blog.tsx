@@ -63,7 +63,7 @@ const articles = [
 export function Blog() {
   return (
     <section id='blog' className='section'>
-      <div className='flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between'>
+      <div className='flex flex-col items-center gap-6 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left'>
         <div>
           <p className='text-sm font-bold tracking-[0.14em] text-blue-600 uppercase'>
             Vzdelávajte sa

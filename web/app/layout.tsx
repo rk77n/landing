@@ -25,7 +25,7 @@ const fontMono = Roboto_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} – jasný plán pre každú situáciu`,
+    default: `${siteConfig.name} – ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -42,12 +42,12 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} – jasný plán pre každú situáciu`,
+    title: `${siteConfig.name} – ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteConfig.name} – jasný plán pre každú situáciu`,
+    title: `${siteConfig.name} – ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
   robots: {

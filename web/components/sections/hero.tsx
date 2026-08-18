@@ -15,9 +15,9 @@ export function Hero() {
       <div className='grid items-center gap-14 lg:grid-cols-2 lg:gap-10'>
         <div className='text-center lg:text-left'>
           <h1 className='text-4xl font-extrabold leading-[1.05] tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl'>
-            Digitálny kopilot
+            Podnikanie
             <br />
-            vašim <span className='text-blue-600'>podnikaním</span>
+            <span className='text-blue-600'>krok za krokom</span>
           </h1>
 
           <p className='mx-auto mt-6 max-w-xl text-lg leading-relaxed text-neutral-600 lg:mx-0'>
