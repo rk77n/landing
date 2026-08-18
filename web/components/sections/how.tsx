@@ -105,22 +105,25 @@ export function How() {
                   {s.points.map((point) => (
                     <li
                       key={point}
-                      className='flex gap-3 text-[15px] leading-relaxed'
+                      className='flex items-start gap-3 text-[15px] leading-relaxed'
                     >
-                      {/* Obal má výšku presne jedného riadku (leading-relaxed = 1.625),
-                          takže ikonka sedí na strede prvého riadku aj pri zalomení. */}
-                      <span className='flex h-[1.625em] shrink-0 items-center'>
-                        <Check size={18} className='text-green-600' />
-                      </span>
+                      {/* 0.35em posadí hrot fajky na účiarie prvého riadku. Stred
+                          riadkového boxu je vyššie – Plus Jakarta Sans má ascent 16
+                          a descent 3, teda výrazne nesymetrické metriky. */}
+                      <Check
+                        size={18}
+                        className='mt-[0.35em] shrink-0 text-green-600'
+                      />
                       <span className='text-neutral-700'>{point}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className='mt-5 flex gap-3 rounded-2xl bg-blue-50/70 p-4 text-[15px] leading-relaxed'>
-                  <span className='flex h-[1.625em] shrink-0 items-center'>
-                    <Lightbulb size={18} className='text-blue-600' />
-                  </span>
+                <div className='mt-5 flex items-start gap-3 rounded-2xl bg-blue-50/70 p-4 text-[15px] leading-relaxed'>
+                  <Lightbulb
+                    size={18}
+                    className='mt-[0.35em] shrink-0 text-blue-600'
+                  />
                   <p className='text-neutral-600'>
                     <span className='font-bold text-neutral-900'>
                       Čím vám pomôžeme:
