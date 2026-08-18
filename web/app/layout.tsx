@@ -4,6 +4,8 @@ import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans, Lora, Roboto_Mono } from 'next/font/google'
 import { AnchorScroll } from '@/components/app/anchor-scroll'
 import { CookieBanner } from '@/components/app/cookie-banner'
+import { Analytics } from '@/components/app/analytics'
+import { StructuredData } from '@/components/app/structured-data'
 import { siteConfig } from '@/lib/site'
 import './globals.css'
 
@@ -79,9 +81,11 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
+        <StructuredData />
         <AnchorScroll />
         {children}
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   )

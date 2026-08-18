@@ -2,23 +2,18 @@
 
 import { Cookie } from 'lucide-react'
 import { useEffect, useState } from 'react'
-
-const CONSENT_COOKIE = 'cp_cookie_consent'
-
-const saveConsent = (value: 'all' | 'necessary') => {
-  document.cookie = `${CONSENT_COOKIE}=${value}; path=/; max-age=31536000; SameSite=Lax`
-}
+import { type Consent, hasDecided, saveConsent } from '@/lib/consent'
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (document.cookie.includes(`${CONSENT_COOKIE}=`)) return
+    if (hasDecided()) return
     const timer = setTimeout(() => setVisible(true), 600)
     return () => clearTimeout(timer)
   }, [])
 
-  const choose = (value: 'all' | 'necessary') => {
+  const choose = (value: Consent) => {
     saveConsent(value)
     setVisible(false)
   }

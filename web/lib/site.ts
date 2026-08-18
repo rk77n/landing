@@ -16,7 +16,7 @@ export const siteConfig = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? fallbackUrl).replace(/\/$/, ''),
   // Držať do ~160 znakov, inak Google popis oreže v produkte vyhľadávania.
   description:
-    'Krok za krokom vás prevedieme podnikaním: checklisty, kalkulačky daní a odvodov, ' +
+    'Podnikanie krok za krokom: checklisty, kalkulačky, dane a odvody, ' +
     'strážené termíny a dokumenty na jednom mieste. Začnite bez registrácie.',
   locale: 'sk_SK',
   keywords: [
