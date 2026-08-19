@@ -1,4 +1,7 @@
+'use client'
+
 import { Quote } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 
 // Avatar farby sa striedajú z brand palety loga; na limetkovej je tmavý
 // text kvôli kontrastu.
@@ -96,7 +99,7 @@ const rows = [
 
 function TestimonialCard({ item }: { item: ItemWithAvatar }) {
   return (
-    <figure className='flex w-[290px] shrink-0 flex-col rounded-[14px] border-[0.5px] border-[#e7e4df] bg-white p-6 sm:w-[340px]'>
+    <figure className='flex w-[290px] shrink-0 snap-start flex-col rounded-[14px] border-[0.5px] border-[#e7e4df] bg-white p-6 sm:w-[340px]'>
       <Quote
         size={22}
         aria-hidden='true'
@@ -134,12 +137,59 @@ function MarqueeGroup({
 }) {
   return (
     <div
-      className='flex shrink-0 items-stretch gap-4 pr-4'
+      className={`flex shrink-0 items-stretch gap-4 pr-4 ${hidden ? 'marquee-dup' : ''}`}
       aria-hidden={hidden || undefined}
     >
       {items.map((item) => (
         <TestimonialCard key={item.name} item={item} />
       ))}
+    </div>
+  )
+}
+
+function MarqueeRow({ row }: { row: (typeof rows)[number] }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  // Nekonečný manuálny scroll (mobil): keď používateľ prescrolluje celú
+  // prvú kópiu obsahu, scrollLeft preskočí o šírku kópie – obsah je na
+  // oboch miestach identický, takže skok nevidno. Na desktope má pás
+  // overflow: hidden, scroll eventy tam nevznikajú a handler je nečinný.
+  useEffect(() => {
+    const el = ref.current
+    const group = el?.firstElementChild?.firstElementChild as HTMLElement | null
+    if (!el || !group) return
+    const onScroll = () => {
+      const w = group.offsetWidth
+      // Pri reduced-motion je duplikát skrytý (obsah nie je 2×) – vtedy
+      // sa nesmie preskakovať, inak by scroll skočil na koniec.
+      if (!w || el.scrollWidth < w * 1.5) return
+      // Cieľ skoku musí ostať mimo podmienky opačného smeru, inak sa
+      // wrapy navzájom rušia (0 → w spustí spätný skok na 0 a naopak).
+      if (el.scrollLeft >= w) el.scrollLeft -= w
+      else if (el.scrollLeft < 1) el.scrollLeft += w - 1
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <div ref={ref} className='marquee relative'>
+      <div className={`flex w-max ${row.trackClass}`}>
+        <MarqueeGroup items={row.items} />
+        {/* Duplicitná skupina: na desktope kvôli plynulému CSS loopu,
+            na mobile kvôli nekonečnému manuálnemu scrollu. */}
+        <MarqueeGroup items={row.items} hidden />
+      </div>
+      {/* Fade masky vo farbe reálneho pozadia stránky (#f6f7f9
+          z komponentu Background), nie tokenu --background. */}
+      <div
+        aria-hidden='true'
+        className='marquee-fade pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#f6f7f9] to-transparent'
+      />
+      <div
+        aria-hidden='true'
+        className='marquee-fade pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#f6f7f9] to-transparent'
+      />
     </div>
   )
 }
@@ -158,23 +208,7 @@ export function Testimonial() {
 
       <div className='mt-12 space-y-4'>
         {rows.map((row) => (
-          <div key={row.trackClass} className='marquee relative overflow-hidden'>
-            <div className={`flex w-max ${row.trackClass}`}>
-              <MarqueeGroup items={row.items} />
-              {/* Duplicitná skupina kvôli plynulému nekonečnému loopu. */}
-              <MarqueeGroup items={row.items} hidden />
-            </div>
-            {/* Fade masky vo farbe reálneho pozadia stránky (#f6f7f9
-                z komponentu Background), nie tokenu --background. */}
-            <div
-              aria-hidden='true'
-              className='pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#f6f7f9] to-transparent'
-            />
-            <div
-              aria-hidden='true'
-              className='pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#f6f7f9] to-transparent'
-            />
-          </div>
+          <MarqueeRow key={row.trackClass} row={row} />
         ))}
       </div>
     </section>

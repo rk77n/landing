@@ -239,24 +239,77 @@
   /* Nekonečný marquee pás referencií – čisté CSS, bez JS a bez knižníc.
      Obsah pásu je vložený 2× za sebou; posun o -50 % je presne šírka
      jednej skupiny, takže reštart animácie nemá viditeľný skok. */
+  .marquee {
+    overflow: hidden;
+  }
   .marquee-track--left {
     animation: marquee-scroll 30s linear infinite;
   }
   .marquee-track--right {
     animation: marquee-scroll 36s linear infinite reverse;
   }
-  /* Pauza na hover (desktop) aj tap/hold (dotykové zariadenia). */
-  .marquee:hover .marquee-track--left,
-  .marquee:hover .marquee-track--right,
-  .marquee:active .marquee-track--left,
-  .marquee:active .marquee-track--right {
+  /* Pauza len na zariadeniach so skutočným hoverom. Holý :hover sa na
+     dotykových zariadeniach po tape „prilepí" (sticky hover) a pás by
+     ostal stáť; (pointer: fine) navyše vylučuje Samsung zariadenia,
+     ktorých firmvér chybne hlási hover schopnosť. */
+  @media (hover: hover) and (pointer: fine) {
+    .marquee:hover .marquee-track--left,
+    .marquee:hover .marquee-track--right {
+      animation-play-state: paused;
+    }
+  }
+  /* Pauza aj pri fokuse klávesnicou vnútri pásu. */
+  .marquee:focus-within .marquee-track--left,
+  .marquee:focus-within .marquee-track--right {
     animation-play-state: paused;
   }
-  @media (prefers-reduced-motion: reduce) {
+  /* Dotykové zariadenia: žiadny auto-posun – pás scrolluje používateľ
+     prstom. Nekonečné opakovanie rieši malý scroll handler
+     v testimonial.tsx (preskok o šírku jednej kópie obsahu). */
+  @media (hover: none), (pointer: coarse) {
+    .marquee {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .marquee::-webkit-scrollbar {
+      display: none;
+    }
     .marquee-track--left,
     .marquee-track--right {
       animation: none;
     }
+  }
+  /* Reduced motion: pohyb vypnutý a obsah ostáva dosiahnuteľný scrollom. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .marquee::-webkit-scrollbar {
+      display: none;
+    }
+    .marquee-track--left,
+    .marquee-track--right {
+      animation: none;
+    }
+  }
+}
+
+/* Mimo @layer, aby display:none prebilo Tailwind utility
+   (vrstva utilities má prednosť pred components, nevrstvené pred oboma).
+   Na dotyku skrývame fade masky (sú prišpendlené na okrajoch scroll
+   kontajnera a prekrývali by text), duplicitná skupina ale musí ostať –
+   je potrebná pre nekonečný loop. Pri reduced-motion je pás staticky
+   scrollovateľný bez opakovania, takže tam ide preč aj duplikát. */
+@media (hover: none), (pointer: coarse) {
+  .marquee-fade {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-dup,
+  .marquee-fade {
+    display: none;
   }
 }
 

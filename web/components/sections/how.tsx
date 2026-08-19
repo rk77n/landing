@@ -107,12 +107,12 @@ export function How() {
                       key={point}
                       className='flex items-start gap-3 text-[15px] leading-relaxed'
                     >
-                      {/* 0.35em posadí hrot fajky na účiarie prvého riadku. Stred
-                          riadkového boxu je vyššie – Plus Jakarta Sans má ascent 16
-                          a descent 3, teda výrazne nesymetrické metriky. */}
+                      {/* 0.2em centruje fajku na optický stred prvého riadku
+                          (leading-relaxed 1.625em − 18px ikona ≈ 6px, polovica
+                          ≈ 3px = 0.2em pri 15px texte). */}
                       <Check
                         size={18}
-                        className='mt-[0.35em] shrink-0 text-green-600'
+                        className='mt-[0.2em] shrink-0 text-green-600'
                       />
                       <span className='text-neutral-700'>{point}</span>
                     </li>
@@ -122,7 +122,7 @@ export function How() {
                 <div className='mt-5 flex items-start gap-3 rounded-2xl bg-blue-50/70 p-4 text-[15px] leading-relaxed'>
                   <Lightbulb
                     size={18}
-                    className='mt-[0.35em] shrink-0 text-blue-600'
+                    className='mt-[0.2em] shrink-0 text-blue-600'
                   />
                   <p className='text-neutral-600'>
                     <span className='font-bold text-neutral-900'>
