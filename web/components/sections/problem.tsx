@@ -1,3 +1,5 @@
+import { ArrowDown, Route } from 'lucide-react'
+import Link from 'next/link'
 import { LuShuffle, LuAlarmClock, LuPuzzle } from 'react-icons/lu'
 import { SectionHeading } from '@/components/app/section-heading'
 
@@ -12,7 +14,7 @@ const problems = [
     icon: <LuAlarmClock size={22} />,
     title: 'Zmeškané termíny',
     description:
-      'Dane, odvody, exspirácie poistiek, jeden prešvihnutý dátum stojí peniaze.',
+      'Dane, odvody, expirácie poistiek. Jeden prešvihnutý dátum stojí peniaze.',
   },
   {
     icon: <LuPuzzle size={22} />,
@@ -54,6 +56,17 @@ export function Problem() {
             </p>
           </div>
         ))}
+      </div>
+
+      <div className='mt-9 flex flex-col items-center gap-9'>
+        <ArrowDown size={22} className='text-neutral-400' aria-hidden='true' />
+        <Link
+          href='/#ako'
+          className='inline-flex items-center gap-2.5 rounded-2xl bg-blue-600/10 px-6 py-3.5 text-center text-base font-semibold text-blue-800 transition hover:bg-blue-600/15'
+        >
+          <Route size={19} className='shrink-0 text-blue-700' />
+          Riešenie: päť krokov k poriadku v podnikaní
+        </Link>
       </div>
     </section>
   )

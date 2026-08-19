@@ -176,6 +176,12 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  /* Ambientný glow (CTA karta): difúzny zafarbený tieň s ťažiskom dole,
+     nikdy symetrická žiara bez posunu. */
+  --shadow-glow-blue-lg:
+    0 4px 20px -2px rgb(37 99 235 / 0.18), 0 16px 48px -8px
+    rgb(37 99 235 / 0.35), 0 32px 96px -12px rgb(37 99 235 / 0.28);
 }
 
 @layer base {
@@ -201,6 +207,7 @@
     @apply mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24;
   }
 
+  /* Guličky (thumb) sliderov v brandovej modrej – rovnaká ako výplň dráhy. */
   .range-slider {
     -webkit-appearance: none;
     appearance: none;
@@ -216,16 +223,48 @@
     height: 20px;
     width: 20px;
     border-radius: 9999px;
-    background: #1f2937;
+    background: #2563eb;
     border: 3px solid #ffffff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
   }
   .range-slider::-moz-range-thumb {
     height: 20px;
     width: 20px;
     border-radius: 9999px;
-    background: #1f2937;
+    background: #2563eb;
     border: 3px solid #ffffff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
+  }
+
+  /* Nekonečný marquee pás referencií – čisté CSS, bez JS a bez knižníc.
+     Obsah pásu je vložený 2× za sebou; posun o -50 % je presne šírka
+     jednej skupiny, takže reštart animácie nemá viditeľný skok. */
+  .marquee-track--left {
+    animation: marquee-scroll 30s linear infinite;
+  }
+  .marquee-track--right {
+    animation: marquee-scroll 36s linear infinite reverse;
+  }
+  /* Pauza na hover (desktop) aj tap/hold (dotykové zariadenia). */
+  .marquee:hover .marquee-track--left,
+  .marquee:hover .marquee-track--right,
+  .marquee:active .marquee-track--left,
+  .marquee:active .marquee-track--right {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track--left,
+    .marquee-track--right {
+      animation: none;
+    }
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }

@@ -1,7 +1,27 @@
-import { ArrowUpRight } from 'lucide-react'
+import {
+  ArrowUpRight,
+  Briefcase,
+  HeartPulse,
+  Receipt,
+  Scale,
+  Users,
+  Wallet,
+  type LucideIcon,
+} from 'lucide-react'
 import Link from 'next/link'
 
 const PORTAL_URL = 'https://www.podnikajte.sk'
+
+// Farebná hlavička karty podľa kategórie – vizuálna náhrada náhľadových
+// obrázkov, ktoré externé články z podnikajte.sk nemajú k dispozícii.
+const categoryStyles: Record<string, { gradient: string; icon: LucideIcon }> = {
+  Dane: { gradient: 'from-blue-500 to-blue-600', icon: Receipt },
+  Odvody: { gradient: 'from-teal-500 to-teal-600', icon: HeartPulse },
+  Podnikanie: { gradient: 'from-violet-500 to-violet-600', icon: Briefcase },
+  Financie: { gradient: 'from-emerald-500 to-emerald-600', icon: Wallet },
+  Právo: { gradient: 'from-indigo-500 to-indigo-600', icon: Scale },
+  Zamestnanci: { gradient: 'from-sky-500 to-sky-600', icon: Users },
+}
 
 const articles = [
   {
@@ -85,32 +105,49 @@ export function Blog() {
       </div>
 
       <div className='mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-        {articles.map((article) => (
-          <Link
-            key={article.title}
-            href={article.href}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='group flex flex-col rounded-3xl border border-neutral-200/70 bg-white p-6 shadow-sm shadow-neutral-900/[0.03] transition hover:-translate-y-1 hover:shadow-lg hover:shadow-neutral-900/[0.06]'
-          >
-            <div className='flex items-center gap-2.5'>
-              <span className='rounded-full bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-wide text-blue-700 uppercase'>
-                {article.category}
-              </span>
-              <span className='text-xs text-neutral-400'>podnikajte.sk</span>
-            </div>
-            <h3 className='mt-4 text-lg font-bold leading-snug text-neutral-900'>
-              {article.title}
-            </h3>
-            <p className='mt-2 flex-1 text-sm leading-relaxed text-neutral-600'>
-              {article.description}
-            </p>
-            <span className='mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-neutral-900 transition group-hover:text-blue-600'>
-              Čítať článok
-              <ArrowUpRight size={15} />
-            </span>
-          </Link>
-        ))}
+        {articles.map((article) => {
+          const style = categoryStyles[article.category] ?? categoryStyles.Dane
+          return (
+            <Link
+              key={article.title}
+              href={article.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='group flex flex-col overflow-hidden rounded-3xl border border-neutral-200/70 bg-white shadow-sm shadow-neutral-900/[0.03] transition hover:-translate-y-1 hover:shadow-lg hover:shadow-neutral-900/[0.06]'
+            >
+              <div
+                className={`relative h-24 shrink-0 overflow-hidden bg-gradient-to-br ${style.gradient}`}
+              >
+                <style.icon
+                  aria-hidden='true'
+                  strokeWidth={1.5}
+                  className='absolute -right-4 -bottom-7 h-28 w-28 text-white/15'
+                />
+                <span className='absolute top-1/2 left-6 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-xl bg-white/20 text-white'>
+                  <style.icon size={22} />
+                </span>
+              </div>
+              <div className='flex flex-1 flex-col p-6'>
+                <div className='flex items-center gap-2.5'>
+                  <span className='rounded-full bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-wide text-blue-700 uppercase'>
+                    {article.category}
+                  </span>
+                  <span className='text-xs text-neutral-500'>podnikajte.sk</span>
+                </div>
+                <h3 className='mt-4 text-lg font-bold leading-snug text-neutral-900'>
+                  {article.title}
+                </h3>
+                <p className='mt-2 flex-1 text-sm leading-relaxed text-neutral-600'>
+                  {article.description}
+                </p>
+                <span className='mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-neutral-900 transition group-hover:text-blue-600'>
+                  Čítať článok
+                  <ArrowUpRight size={15} />
+                </span>
+              </div>
+            </Link>
+          )
+        })}
       </div>
     </section>
   )

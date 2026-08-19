@@ -132,13 +132,13 @@ export function MortgageCalc() {
               className={`rounded-2xl px-3 py-3 text-center transition ${
                 active
                   ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/25'
-                  : 'bg-neutral-100 text-neutral-500 hover:bg-neutral-200/70'
+                  : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200/70'
               }`}
             >
               <div className='text-base font-bold'>{pct} %</div>
               <div
                 className={`mt-0.5 text-xs ${
-                  active ? 'text-blue-100' : 'text-neutral-400'
+                  active ? 'text-blue-100' : 'text-neutral-500'
                 }`}
               >
                 {formatEur(estimate(pct))}
@@ -157,7 +157,7 @@ export function MortgageCalc() {
         </p>
       </div>
 
-      <p className='mt-4 text-center text-xs text-neutral-400'>
+      <p className='mt-4 text-center text-xs text-neutral-500'>
         Orientačný výpočet 2026 · presné metodiky preberáme od partnerov
       </p>
     </div>

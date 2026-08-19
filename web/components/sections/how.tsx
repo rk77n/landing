@@ -88,7 +88,7 @@ export function How() {
         <div className='space-y-8'>
           {steps.map((s) => (
             <div key={s.step} className='relative flex flex-col gap-5 sm:flex-row'>
-              <div className='z-10 grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-neutral-900 text-white shadow-lg shadow-neutral-900/20'>
+              <div className='z-10 grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/25'>
                 {s.icon}
               </div>
 

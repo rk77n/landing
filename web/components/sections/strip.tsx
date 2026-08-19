@@ -1,25 +1,28 @@
-import { Fragment } from 'react'
+import { Bell, Calculator, ListChecks, Vault } from 'lucide-react'
 
 const items = [
-  'Akčné kroky',
-  'Kalkulačky',
-  'Trezor',
-  'Pripomienky',
+  { icon: ListChecks, label: 'Akčné kroky' },
+  { icon: Calculator, label: 'Kalkulačky' },
+  { icon: Vault, label: 'Trezor' },
+  { icon: Bell, label: 'Pripomienky' },
 ]
 
 export function Strip() {
   return (
     <section className='w-full border-y border-neutral-200/70 bg-white/60'>
-      <div className='mx-auto grid w-full max-w-7xl grid-cols-2 gap-y-3 px-4 py-6 text-center sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-2 sm:px-6 lg:px-8'>
-        {items.map((item, i) => (
-          <Fragment key={item}>
-            {i > 0 && (
-              <span className='hidden h-1.5 w-1.5 rounded-full bg-neutral-300 sm:block' />
-            )}
-            <span className='text-[15px] font-bold text-neutral-800 sm:text-base'>
-              {item}
+      <div className='mx-auto grid w-full max-w-7xl grid-cols-2 gap-x-4 gap-y-4 px-4 py-6 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-12 sm:px-6 lg:px-8'>
+        {items.map((item) => (
+          <span
+            key={item.label}
+            className='flex items-center justify-center gap-2.5'
+          >
+            <span className='grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600'>
+              <item.icon size={17} />
             </span>
-          </Fragment>
+            <span className='text-[15px] font-bold text-neutral-800 sm:text-base'>
+              {item.label}
+            </span>
+          </span>
         ))}
       </div>
     </section>

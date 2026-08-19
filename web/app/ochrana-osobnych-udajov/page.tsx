@@ -216,7 +216,7 @@ export default function OchranaOsobnychUdajovPage() {
             z. o ochrane osobných údajov.
           </p>
           <p className='mt-3 text-sm font-semibold text-neutral-500'>
-            Verzia: 1.0 | Účinné od: [DOPLNIŤ]
+            Verzia: 1.0 | Účinné od: 1.9.2026
           </p>
 
           <nav className='mt-10 rounded-3xl border border-neutral-200/70 bg-white p-6 shadow-sm shadow-neutral-900/[0.03] sm:p-8'>
