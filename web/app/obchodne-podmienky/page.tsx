@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Všeobecné obchodné podmienky',
   description:
     'Všeobecné podmienky poskytovania služieb online platformy Cesta podnikateľa.',
+  alternates: {
+    canonical: '/obchodne-podmienky',
+  },
 }
 
 type Section = {

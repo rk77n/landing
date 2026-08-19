@@ -6,7 +6,7 @@ import { AnchorScroll } from '@/components/app/anchor-scroll'
 import { CookieBanner } from '@/components/app/cookie-banner'
 import { Analytics } from '@/components/app/analytics'
 import { StructuredData } from '@/components/app/structured-data'
-import { siteConfig } from '@/lib/site'
+import { isIndexable, siteConfig } from '@/lib/site'
 import './globals.css'
 
 const fontSans = Plus_Jakarta_Sans({
@@ -36,9 +36,8 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
-  alternates: {
-    canonical: '/',
-  },
+  // Canonical nenastavujeme globálne – zdedili by ho podstránky a hlásili by
+  // sa ako duplicity domovskej stránky. Každá stránka si ho definuje sama.
   openGraph: {
     type: 'website',
     locale: siteConfig.locale,
@@ -52,17 +51,27 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} – ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
-  },
+  // Testovacie verzie (Vercel preview, *.vercel.app) nesmú byť indexované.
+  robots: isIndexable
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+          'max-video-preview': -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+        },
+      },
   category: 'business',
 }
 

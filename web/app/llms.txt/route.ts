@@ -1,9 +1,14 @@
-import { siteConfig } from '@/lib/site'
+import { isIndexable, siteConfig } from '@/lib/site'
 
 // Vydávané staticky – llms.txt sa mení len s obsahom webu, nie za behu.
 export const dynamic = 'force-static'
 
 export function GET() {
+  // Testovacie verzie nemajú AI crawlerom ponúkať obsah s testovacou URL.
+  if (!isIndexable) {
+    return new Response('Not Found', { status: 404 })
+  }
+
   const u = siteConfig.url
 
   const body = `# ${siteConfig.name}

@@ -8,6 +8,18 @@ const vercelHost =
 
 const fallbackUrl = vercelHost ? `https://${vercelHost}` : 'https://cestapodnikatela.sk'
 
+// Indexovanie vyhľadávačmi je povolené len na ostrej produkcii:
+// musí byť explicitne nastavená NEXT_PUBLIC_SITE_URL (produkčná doména)
+// a build musí bežať v produkčnom prostredí (nie Vercel preview/test).
+// Testovacie verzie tak dostanú noindex/nofollow a sitemap.xml vráti 404.
+// POZOR: hodnota sa zapeká pri builde – produkciu nasadzuj vždy cez git push
+// (čerstvý build), nikdy cez „Promote to Production" preview deploymentu.
+const deployEnv =
+  process.env.VERCEL_ENV ?? process.env.NODE_ENV ?? 'development'
+
+export const isIndexable =
+  Boolean(process.env.NEXT_PUBLIC_SITE_URL) && deployEnv === 'production'
+
 export const siteConfig = {
   name: 'Cesta Podnikateľa',
   // Slová z tagline musia mať oporu v texte stránky (SEO: title vs. obsah).

@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'Zásady ochrany osobných údajov',
   description:
     'Informácie o spracúvaní osobných údajov pri používaní platformy Cesta podnikateľa.',
+  alternates: {
+    canonical: '/ochrana-osobnych-udajov',
+  },
 }
 
 const toc = [
