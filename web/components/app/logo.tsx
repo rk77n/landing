@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 export function LogoMark({ className }: { className?: string }) {
@@ -24,10 +27,19 @@ export function Logo({
   markClassName?: string
   onClick?: () => void
 }) {
+  const pathname = usePathname()
+
   return (
     <Link
       href='/'
-      onClick={onClick}
+      onClick={(e) => {
+        // Na domovskej stránke neprenavigúvame, len plynulo posunieme na vrch
+        if (pathname === '/') {
+          e.preventDefault()
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+        onClick?.()
+      }}
       className={cn('flex items-center gap-2.5', className)}
     >
       <LogoMark className={markClassName} />

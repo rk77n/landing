@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LogoMark } from '@/components/app/logo'
+import { Logo } from '@/components/app/logo'
 
 const columns = [
   {
@@ -32,12 +32,7 @@ export function Footer() {
       <div className='mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8'>
         <div className='grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]'>
           <div className='max-w-xs'>
-            <div className='flex items-center gap-2.5'>
-              <LogoMark />
-              <span className='text-lg font-extrabold tracking-tight text-neutral-900'>
-                Cesta Podnikateľa
-              </span>
-            </div>
+            <Logo className='w-fit' />
             <p className='mt-4 text-sm leading-relaxed text-neutral-500'>
               Digitálny kopilot svetom slovenského biznisu.
             </p>
@@ -66,7 +61,15 @@ export function Footer() {
 
         <div className='mt-12 border-t border-neutral-200 pt-6 text-center text-sm text-neutral-400'>
           &copy; {new Date().getFullYear()}{' '}Cesta Podnikateľa &middot;
-          Obsahový partner: podnikajte.sk
+          Obsahový partner:{' '}
+          <a
+            href='https://www.podnikajte.sk'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline underline-offset-2 transition-colors hover:text-neutral-900'
+          >
+            podnikajte.sk
+          </a>
         </div>
       </div>
     </footer>
